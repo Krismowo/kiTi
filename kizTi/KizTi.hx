@@ -1,49 +1,53 @@
 package kizTi;
 import openfl.Assets;
-import openfl.display.Bitmap;
-import openfl.display.Sprite;
+import openfl.media.Sound;
 import openfl.events.Event;
-import openfl.display.DisplayObjectContainer;
-import kizTi.State;
+
 /**
  * ...
  * @author Dazed
  */
-class KizTi extends Sprite
+class KizTi 
 {
-	public var currentScale:Float;
-	public var state:State;
-	public var gameWidth:Int;
-	public var gameHeight:Int;
-	public function new(statee:State, width:Int, height:Int){
-		super();
-		gameWidth = width;
-		gameHeight = height;
-		state = statee;
-		state.ss = switchState;
-		addChild(state);
-		addEventListener(Event.ADDED_TO_STAGE, create);
-		//var test = new Bitmap(Assets.getBitmapData("assets/img/img.png"));
-		//addChild(test);
+	public static var sounds:Array<Sound> = [];
+	public static var music:Sound;
+	public static var music_looping:Bool = false;
+
+	public static function playMusic(assetpath:String, ?loop:Bool = true, ?loops:Int = 0, ?startTime:Int = 0){
+		#if (!html5 && !flash)
+		music = Sound.fromFile(assetpath);
+		#else
+		music = Assets.getMusic(assetpath);
+		#end
+		if (loop){
+			loops = 0;
+		}
+		music_looping = loop;
+		music.play(startTime, loops);
+		music.addEventListener(Event.SOUND_COMPLETE, loopmcheck);
 	}
 	
-	public function create(_){
-		removeEventListener(Event.ADDED_TO_STAGE, create);
-		resize(gameWidth, gameHeight);
+	private static function loopmcheck(_){
+		if (music_looping){
+			music.play();
+		}else{
+			music.removeEventListener(Event.SOUND_COMPLETE, loopmcheck);
+		}
 	}
 	
-	public function resize(width:Int, height:Int){
-		stage.width = width;
-		stage.height = height;
-	}
-	
-	public function switchState(state:State){
-		removeChild(state);
-		state.removeEventListener(Event.ENTER_FRAME, state.update);
-		this.state = state;
-		state.gameHeight = gameHeight;
-		state.gameWidth = gameWidth;
-		addChild(state);
+	public static function playSound(assetpath:String){
+		#if (!html5 && !flash)
+		var sound = Sound.fromFile(assetpath);
+		#else
+		var sound = Assets.getSound(assetpath);
+		#end
+		sound.play();
+		sound.addEventListener(Event.SOUND_COMPLETE, function(_){
+			sounds.remove(sound);
+			sound = null;
+		});
+		sounds.push(sound);
+		return sound;
 	}
 	
 }
