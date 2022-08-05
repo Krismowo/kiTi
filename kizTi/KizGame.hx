@@ -5,7 +5,7 @@ import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.DisplayObjectContainer;
-import kizTi.State;
+import kizTi.KizState;
 import openfl.Lib;
 import openfl.display.StageScaleMode;
 import openfl.display.StageAlign;
@@ -16,10 +16,10 @@ import openfl.display.StageAlign;
 class KizGame extends Sprite
 {
 	public var currentScale:Float;
-	public var state:State;
+	public var state:KizState;
 	public var gameWidth:Int;
 	public var gameHeight:Int;
-	public function new(statee:State, width:Int, height:Int){
+	public function new(statee:KizState, width:Int, height:Int){
 		super();
 		gameWidth = width;
 		gameHeight = height;
@@ -50,7 +50,7 @@ class KizGame extends Sprite
 		stage.height = newHeight;
 	}
 	
-	public function switchState(state:State){
+	public function switchState(state:KizState){
 		removeChild(state);
 		state.removeEventListener(Event.ENTER_FRAME, state.update);
 		this.state = state;
