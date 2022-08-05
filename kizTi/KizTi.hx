@@ -16,6 +16,7 @@ class KizTi
 	public static function playMusic(assetpath:String, ?loop:Bool = true, ?loops:Int = 0, ?startTime:Int = 0){
 		#if (!html5 && !flash)
 		music = Sound.fromFile(assetpath);
+		//music.
 		#else
 		music = Assets.getMusic(assetpath);
 		#end

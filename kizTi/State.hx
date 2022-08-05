@@ -2,6 +2,9 @@ package kizTi;
 
 import openfl.display.Sprite;
 import openfl.events.Event;
+import openfl.display.StageScaleMode;
+import openfl.display.StageAlign;
+
 /**
  * ...
  * @author Dazed
@@ -28,9 +31,9 @@ class State extends Sprite
 		//ur shit here lmfao
 	}
 	
-	public function resize(width:Int, height:Int){
-		stage.width = width;
-		stage.height = height;
+	public function resize(newWidth:Int, newHeight:Int){
+		stage.width = newWidth;
+		stage.height = newHeight;
 	}
 	
 	dynamic public function ss(state:State){

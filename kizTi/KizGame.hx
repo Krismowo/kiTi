@@ -1,10 +1,14 @@
 package kizTi;
+import lime.app.Application;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.DisplayObjectContainer;
 import kizTi.State;
+import openfl.Lib;
+import openfl.display.StageScaleMode;
+import openfl.display.StageAlign;
 /**
  * ...
  * @author Dazed
@@ -22,19 +26,28 @@ class KizGame extends Sprite
 		state = statee;
 		state.ss = switchState;
 		addChild(state);
+		trace(gameWidth);
+		trace(gameHeight);
 		addEventListener(Event.ADDED_TO_STAGE, create);
-		//var test = new Bitmap(Assets.getBitmapData("assets/img/img.png"));
-		//addChild(test);
 	}
 	
 	public function create(_){
 		removeEventListener(Event.ADDED_TO_STAGE, create);
 		resize(gameWidth, gameHeight);
+		stage.addEventListener(Event.RESIZE, onResize);
 	}
 	
-	public function resize(width:Int, height:Int){
-		stage.width = width;
-		stage.height = height;
+	public function onResize(_){
+		var stageScaleX:Float = Application.current.window.width / gameWidth;
+		var stageScaleY:Float = Application.current.window.height / gameHeight;
+		scaleX = stageScaleX;
+		scaleY = stageScaleY;
+	}
+	
+	public function resize(newWidth:Int, newHeight:Int){
+		
+		stage.width = newWidth;
+		stage.height = newHeight;
 	}
 	
 	public function switchState(state:State){
