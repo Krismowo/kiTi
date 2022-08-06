@@ -28,8 +28,6 @@ class KiGame extends Sprite
 		state = statee;
 		state.ss = switchState;
 		addChild(state);
-		trace(gameWidth);
-		trace(gameHeight);
 		addEventListener(Event.ADDED_TO_STAGE, create);
 	}
 	
@@ -53,9 +51,9 @@ class KiGame extends Sprite
 	
 	public function switchState(state:KiState){
 		removeChild(state);
-		state.removeEventListener(Event.ENTER_FRAME, state.frame_enter);
-		state.addEventListener(KeyboardEvent.KEY_DOWN, state.keyPressed);
+		state.removeEventListeners();
 		this.state = state;
+		state.ss = switchState;
 		state.gameHeight = gameHeight;
 		state.gameWidth = gameWidth;
 		addChild(state);

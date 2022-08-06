@@ -6,6 +6,9 @@ import openfl.display.StageScaleMode;
 import openfl.display.StageAlign;
 import openfl.ui.Keyboard;
 import openfl.events.KeyboardEvent;
+import openfl.events.MouseEvent;
+import openfl.ui.Mouse;
+import openfl.Lib;
 
 /**
  * ...
@@ -19,23 +22,113 @@ class KiState extends Sprite
 	public function new() 
 	{
 		super();
-		addEventListener(Event.ENTER_FRAME, frame_enter);
 		addEventListener(Event.ADDED_TO_STAGE, init);
-		addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
+	}
+	
+	public function removeEventListeners(){
+		removeEventListener(Event.ENTER_FRAME, fe);
+		
+		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, kp);
+		
+		removeEventListener(MouseEvent.MOUSE_DOWN, old);
+		removeEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
+		removeEventListener(MouseEvent.MOUSE_UP, olu);
+		removeEventListener(MouseEvent.RIGHT_MOUSE_UP, oru);
+		
+		removeEventListener(MouseEvent.CLICK, olmc);
+		removeEventListener(MouseEvent.RIGHT_CLICK, ormc);
+		
+		removeEventListener(MouseEvent.MOUSE_MOVE, mm);
+	}
+	
+	public function addListeners(){
+		addEventListener(Event.ENTER_FRAME, fe);
+		
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, kp);
+		
+		addEventListener(MouseEvent.MOUSE_DOWN, old);
+		addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
+		addEventListener(MouseEvent.MOUSE_UP, olu);
+		addEventListener(MouseEvent.RIGHT_MOUSE_UP, oru);
+		
+		addEventListener(MouseEvent.CLICK, olmc);
+		addEventListener(MouseEvent.RIGHT_CLICK, ormc);
+		
+		addEventListener(MouseEvent.MOUSE_MOVE, mm);
+	}
+	
+	public function mm(event:MouseEvent){
+		onMouseMove(event.localX, event.localY, event);
+	}
+	
+	public function onMouseMove(x:Float, y:Float, event:MouseEvent){
+		//ur own shiz here lmfao
+	}
+	
+	public function olmc(event:MouseEvent){
+		onMouseClick("Left", event);
+	}
+	
+	public function ormc(event:MouseEvent){
+		onMouseClick("Right", event);
+	}
+	
+	public function old(event:MouseEvent){
+		onMouseDown("Left", event);
+	}
+	
+	public function ord(event:MouseEvent){
+		onMouseDown("Right", event);
+	}
+	
+	public function olu(event:MouseEvent){
+		OnMouseUp("Left", event);
+	}
+	
+	public function oru(event:MouseEvent){
+		OnMouseUp("Right", event);
+	}
+	
+	public function onMouseClick(button:String, event:MouseEvent){
+		//ur own shiz here lmfao
+	}
+	
+	public function onRightMouseClick(button:String, event:MouseEvent){
+		//ur own shiz here lmfao
+	}
+	
+	public function onMouseDown(button:String, event:MouseEvent){
+		//ur own shiz here lmfao
+	}
+	
+	public function OnMouseUp(button:String, event:MouseEvent){
+		//ur own shiz here lmfao
 	}
 	
 	public function init(_){
 		removeEventListener(Event.ADDED_TO_STAGE, init);
 		resize(gameWidth, gameHeight);
 		create();
+		addListeners();
 	}
 	
-	public function keyPressed(key:KeyboardEvent){
+	public function kp(event:KeyboardEvent){
+		trace("keydown");
+		var key:String = String.fromCharCode(event.charCode);
+		if (event.shiftKey){
+			key = key.toUpperCase();
+		}else{
+			key = key.toLowerCase();
+		}
+		onKeyPressed(key, event);
+	}
+	
+	public function onKeyPressed(key:String, event:KeyboardEvent){
 		//ur own shiz here lmfao
 	}
 	
 	public function create(){
-		//ur shit here lmfao
+		//ur own shiz here lmfao
 	}
 	
 	public function resize(newWidth:Int, newHeight:Int){
@@ -51,12 +144,12 @@ class KiState extends Sprite
 		ss(state);
 	}
 	
-	public function frame_enter(_){
+	public function fe(event:Event){
 		update();
 	}
 	
 	public function update(){
-		//ur shit here
+		//ur own shiz here lmfao
 	}
 	
 }
