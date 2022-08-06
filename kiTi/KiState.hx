@@ -43,11 +43,11 @@ class KiState extends Sprite
 		stage.height = newHeight;
 	}
 	
-	dynamic public function ss(state:KizState){
+	dynamic public function ss(state:KiState){
 		//shizhere
 	}
 	
-	public function switchState(state:KizState){
+	public function switchState(state:KiState){
 		ss(state);
 	}
 	

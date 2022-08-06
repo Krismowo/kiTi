@@ -5,7 +5,7 @@ import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.DisplayObjectContainer;
-import KiState;
+import kiTi.KiState;
 import openfl.Lib;
 import openfl.display.StageScaleMode;
 import openfl.display.StageAlign;
@@ -21,7 +21,7 @@ class KiGame extends Sprite
 	public var state:KiState;
 	public var gameWidth:Int;
 	public var gameHeight:Int;
-	public function new(statee:KizState, width:Int, height:Int){
+	public function new(statee:KiState, width:Int, height:Int){
 		super();
 		gameWidth = width;
 		gameHeight = height;
