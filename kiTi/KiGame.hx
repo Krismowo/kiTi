@@ -1,22 +1,24 @@
-package kizTi;
+package kiTi;
 import lime.app.Application;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.DisplayObjectContainer;
-import kizTi.KizState;
+import KiState;
 import openfl.Lib;
 import openfl.display.StageScaleMode;
 import openfl.display.StageAlign;
+import openfl.events.KeyboardEvent;
+
 /**
  * ...
  * @author Dazed
  */
-class KizGame extends Sprite
+class KiGame extends Sprite
 {
 	public var currentScale:Float;
-	public var state:KizState;
+	public var state:KiState;
 	public var gameWidth:Int;
 	public var gameHeight:Int;
 	public function new(statee:KizState, width:Int, height:Int){
@@ -45,14 +47,14 @@ class KizGame extends Sprite
 	}
 	
 	public function resize(newWidth:Int, newHeight:Int){
-		
 		stage.width = newWidth;
 		stage.height = newHeight;
 	}
 	
-	public function switchState(state:KizState){
+	public function switchState(state:KiState){
 		removeChild(state);
-		state.removeEventListener(Event.ENTER_FRAME, state.update);
+		state.removeEventListener(Event.ENTER_FRAME, state.frame_enter);
+		state.addEventListener(KeyboardEvent.KEY_DOWN, state.keyPressed);
 		this.state = state;
 		state.gameHeight = gameHeight;
 		state.gameWidth = gameWidth;

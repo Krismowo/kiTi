@@ -1,4 +1,4 @@
-package kizTi;
+package kiTi;
 
 import openfl.events.Event;
 import openfl.media.Sound;
@@ -10,7 +10,7 @@ import openfl.media.SoundTransform;
  * ...
  * @author Dazed
  */
-class KizSound{
+class KiSound{
 	public var paused:Bool;
 	public var looping:Bool;
 	public var sound:Sound; //the actual sound cus idk how to do thu extending lmao
@@ -96,6 +96,9 @@ class KizSound{
 			}
 			_channel.addEventListener(Event.SOUND_COMPLETE, loopstuff);
 			//sound.addEventListener(Event.SOUND_COMPLETE, loopstuff);
+		}else{
+			_channel = null;
+			_timepaused = 0;
 		}
 	}
 	

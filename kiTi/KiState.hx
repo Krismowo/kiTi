@@ -1,4 +1,4 @@
-package kizTi;
+package kiTi;
 
 import openfl.display.Sprite;
 import openfl.events.Event;
@@ -11,7 +11,7 @@ import openfl.events.KeyboardEvent;
  * ...
  * @author Dazed
  */
-class KizState extends Sprite 
+class KiState extends Sprite 
 {
 	public var currentScale:Float;
 	public var gameWidth:Int;
@@ -19,7 +19,7 @@ class KizState extends Sprite
 	public function new() 
 	{
 		super();
-		addEventListener(Event.ENTER_FRAME, update);
+		addEventListener(Event.ENTER_FRAME, frame_enter);
 		addEventListener(Event.ADDED_TO_STAGE, init);
 		addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
 	}
@@ -51,7 +51,11 @@ class KizState extends Sprite
 		ss(state);
 	}
 	
-	public function update(elapsed:Dynamic){
+	public function frame_enter(_){
+		update();
+	}
+	
+	public function update(){
 		//ur shit here
 	}
 	

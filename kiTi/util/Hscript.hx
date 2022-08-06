@@ -1,4 +1,4 @@
-package kizTi;
+package kiTi.util;
 
 import hscript.Interp;
 import hscript.Parser;
