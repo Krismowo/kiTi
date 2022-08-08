@@ -19,10 +19,13 @@ class KiState extends Sprite
 	public var currentScale:Float;
 	public var gameWidth:Int;
 	public var gameHeight:Int;
+	public var mouse:KiMouse;
+	var previousTime:Float = 0;
 	public function new() 
 	{
 		super();
 		addEventListener(Event.ADDED_TO_STAGE, init);
+		mouse = new KiMouse(0, 0);
 	}
 	
 	public function removeEventListeners(){
@@ -32,11 +35,16 @@ class KiState extends Sprite
 		
 		removeEventListener(MouseEvent.MOUSE_DOWN, old);
 		removeEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
+		removeEventListener(MouseEvent.MIDDLE_MOUSE_DOWN, omd);
+		
+		
 		removeEventListener(MouseEvent.MOUSE_UP, olu);
 		removeEventListener(MouseEvent.RIGHT_MOUSE_UP, oru);
+		removeEventListener(MouseEvent.MIDDLE_MOUSE_UP, omu);
 		
-		removeEventListener(MouseEvent.CLICK, olmc);
-		removeEventListener(MouseEvent.RIGHT_CLICK, ormc);
+		removeEventListener(MouseEvent.CLICK, olc);
+		removeEventListener(MouseEvent.MIDDLE_CLICK, omc);
+		removeEventListener(MouseEvent.RIGHT_CLICK, orc);
 		
 		removeEventListener(MouseEvent.MOUSE_MOVE, mm);
 	}
@@ -48,16 +56,22 @@ class KiState extends Sprite
 		
 		addEventListener(MouseEvent.MOUSE_DOWN, old);
 		addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
+		addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN, omd);
+		
 		addEventListener(MouseEvent.MOUSE_UP, olu);
+		addEventListener(MouseEvent.MIDDLE_MOUSE_UP, omu);
 		addEventListener(MouseEvent.RIGHT_MOUSE_UP, oru);
 		
-		addEventListener(MouseEvent.CLICK, olmc);
-		addEventListener(MouseEvent.RIGHT_CLICK, ormc);
+		addEventListener(MouseEvent.CLICK, olc);
+		addEventListener(MouseEvent.MIDDLE_CLICK, omc);
+		addEventListener(MouseEvent.RIGHT_CLICK, orc);
 		
 		addEventListener(MouseEvent.MOUSE_MOVE, mm);
 	}
 	
 	public function mm(event:MouseEvent){
+		mouse.x = event.localX;
+		mouse.y = event.localY;
 		onMouseMove(event.localX, event.localY, event);
 	}
 	
@@ -65,28 +79,46 @@ class KiState extends Sprite
 		//ur own shiz here lmfao
 	}
 	
-	public function olmc(event:MouseEvent){
+	public function olc(event:MouseEvent){
 		onMouseClick("Left", event);
 	}
 	
-	public function ormc(event:MouseEvent){
+	public function orc(event:MouseEvent){
 		onMouseClick("Right", event);
 	}
 	
+	public function omc(event:MouseEvent){
+		onMouseClick("Middle", event);
+	}
+	
 	public function old(event:MouseEvent){
+		mouse.leftButton = true;
 		onMouseDown("Left", event);
 	}
 	
 	public function ord(event:MouseEvent){
+		mouse.leftButton = true;
 		onMouseDown("Right", event);
 	}
 	
+	public function omd(event:MouseEvent){
+		mouse.middleButton = true;
+		onMouseDown("Middle", event);
+	}
+	
 	public function olu(event:MouseEvent){
+		mouse.leftButton = false;
 		OnMouseUp("Left", event);
 	}
 	
 	public function oru(event:MouseEvent){
+		mouse.leftButton = false;
 		OnMouseUp("Right", event);
+	}
+	
+	public function omu(event:MouseEvent){
+		mouse.middleButton = false;
+		OnMouseUp("Middle", event);
 	}
 	
 	public function onMouseClick(button:String, event:MouseEvent){
@@ -108,12 +140,11 @@ class KiState extends Sprite
 	public function init(_){
 		removeEventListener(Event.ADDED_TO_STAGE, init);
 		resize(gameWidth, gameHeight);
-		create();
 		addListeners();
+		create();
 	}
 	
 	public function kp(event:KeyboardEvent){
-		trace("keydown");
 		var key:String = String.fromCharCode(event.charCode);
 		if (event.shiftKey){
 			key = key.toUpperCase();
@@ -145,10 +176,13 @@ class KiState extends Sprite
 	}
 	
 	public function fe(event:Event){
-		update();
+		var currentTime = haxe.Timer.stamp();
+		var deltaTime:Float = Std.int((currentTime - previousTime) * 1000) / 1000; //milliseconds difference
+		previousTime = currentTime;
+		update(deltaTime);
 	}
 	
-	public function update(){
+	public function update(deltaTime:Float){
 		//ur own shiz here lmfao
 	}
 	

@@ -7,9 +7,6 @@ import openfl.events.Event;
 import openfl.display.DisplayObjectContainer;
 import kiTi.KiState;
 import openfl.Lib;
-import openfl.display.StageScaleMode;
-import openfl.display.StageAlign;
-import openfl.events.KeyboardEvent;
 
 /**
  * ...
@@ -23,6 +20,12 @@ class KiGame extends Sprite
 	public var gameHeight:Int;
 	public function new(statee:KiState, width:Int, height:Int){
 		super();
+		if (width == 0){
+			width = Application.current.window.width;
+		}
+		if (height == 0){
+			height = Application.current.window.height;
+		}
 		gameWidth = width;
 		gameHeight = height;
 		state = statee;
