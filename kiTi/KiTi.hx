@@ -1,8 +1,5 @@
 package kiTi;
-import openfl.Assets;
-import kiTi.KizSound;
-import openfl.media.Sound;
-import openfl.events.Event;
+import kiTi.KiSound;
 
 /**
  * ...
@@ -10,12 +7,19 @@ import openfl.events.Event;
  */
 class KiTi 
 {
-	public static var sounds:Array<KizSound> = [];
-	public static var music:KizSound;
+	public static var save:KiSave;
+	public static var sounds:Array<KiSound> = [];
+	public static var music:KiSound;
+	
+	public static function init(){
+		if (save == null){
+			save = new KiSave();
+		}
+	}
 
 	public static function playMusic(assetpath:String, ?loop:Bool = true, ?loops:Int = 0, ?startTime:Int = 0){
 		if (music == null){
-			music = new KizSound(assetpath, true);
+			music = new KiSound(assetpath, true);
 		}else{
 			music.load(assetpath, true);
 		}
@@ -26,7 +30,7 @@ class KiTi
 	}
 	
 	public static function playSound(assetpath:String){
-		var sound = new KizSound(assetpath, false);
+		var sound = new KiSound(assetpath, false);
 		sound.play(0, false, 0);
 		sounds.push(sound);
 		return sound;
