@@ -15,7 +15,7 @@ class KiShader extends Shader
 	{
 		if (vertshaderpath != null){
 			if (vertshaderpath.replace(" ", "") != ""){
-				glVertexSource += Assets.getText("KITI_STUFF/shaders/vert.vert") "\n" + Assets.getText(vertshaderpath);
+				glVertexSource += Assets.getText("KITI_STUFF/shaders/vert.vert") + "\n" + Assets.getText(vertshaderpath);
 				trace("got vert shad, applying");
 			}
 		}
