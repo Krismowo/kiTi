@@ -10,11 +10,13 @@ class KiTi
 	public static var save:KiSave;
 	public static var sounds:Array<KiSound> = [];
 	public static var music:KiSound;
+	public static var game:KiGame;
 	
-	public static function init(){
+	public static function init(dGame:KiGame){
 		if (save == null){
 			save = new KiSave();
 		}
+		game = dGame;
 	}
 
 	public static function playMusic(assetpath:String, ?loop:Bool = true, ?loops:Int = 0, ?startTime:Int = 0){

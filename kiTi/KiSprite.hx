@@ -56,7 +56,7 @@ class KiSprite extends Bitmap
 	}
 	
 	public function setAnimFrames(animName:String, animFrames:Array<KiFrame>, fps:Int = 0){
-		var curAnim:KiAnimation = new KiAnimation(fps);
+		var curAnim:KiAnimation = new KiAnimation(fps, animName);
 		for (i in animFrames){
 			var frame:KiFrame = i;
 			var expFrame:BitmapData = new BitmapData(Std.int(frame.width), Std.int(frame.height));

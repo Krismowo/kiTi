@@ -12,10 +12,12 @@ class KiAnimation
 	public var playing:Bool;
 	public var curframe:Int = 0;
 	public var frameTimer:Float = 0;
-	public function new(fps:Int){
+	public var animationName:String = "";
+	public function new(fps:Int, animName:String){
 		frames = [];
 		this.fps = fps;
 		this.playing = false;
+		this.animationName = animName;
 	}
 	
 }

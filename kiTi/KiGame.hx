@@ -19,7 +19,7 @@ class KiGame extends Sprite
 	public var gameWidth:Int;
 	public var gameHeight:Int;
 	public function new(statee:Class<KiState>, width:Int, height:Int){
-		KiTi.init();
+		KiTi.init(this);
 		super();
 		if (width == 0){
 			width = Application.current.window.width;
@@ -32,6 +32,8 @@ class KiGame extends Sprite
 		state = cast Type.createInstance(statee, []);
 		state.ss = switchState;
 		addChild(state);
+		state.gameHeight = gameHeight;
+		state.gameWidth = gameWidth;
 		addEventListener(Event.ADDED_TO_STAGE, create);
 	}
 	

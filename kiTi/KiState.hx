@@ -32,6 +32,7 @@ class KiState extends Sprite
 		removeEventListener(Event.ENTER_FRAME, fe);
 		
 		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, kp);
+		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_UP, ku);
 		
 		removeEventListener(MouseEvent.MOUSE_DOWN, old);
 		removeEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
@@ -53,6 +54,7 @@ class KiState extends Sprite
 		addEventListener(Event.ENTER_FRAME, fe);
 		
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, kp);
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, ku);
 		
 		addEventListener(MouseEvent.MOUSE_DOWN, old);
 		addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, ord);
@@ -152,6 +154,20 @@ class KiState extends Sprite
 			key = key.toLowerCase();
 		}
 		onKeyPressed(key, event);
+	}
+	
+	public function ku(event:KeyboardEvent){
+		var key:String = String.fromCharCode(event.charCode);
+		if (event.shiftKey){
+			key = key.toUpperCase();
+		}else{
+			key = key.toLowerCase();
+		}
+		onKeyUp(key, event);
+	}
+	
+	public function onKeyUp(key:String, event:KeyboardEvent){
+		//ur own shiz here lmfao
 	}
 	
 	public function onKeyPressed(key:String, event:KeyboardEvent){

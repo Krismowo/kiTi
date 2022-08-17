@@ -1,5 +1,6 @@
 package kiTi;
 
+import openfl.Lib;
 import openfl.events.Event;
 import openfl.media.Sound;
 import openfl.Assets;
@@ -18,6 +19,8 @@ class KiSound{
 	private var _timepaused:Float;
 	private var startTime:Float; //future maybe needed idk
 	public var restartAtTime:Bool = false;
+	public var soundPos:Float = 0;
+	var previousTime:Float = 0;
 	
 	public function new(asset:Dynamic = null, ismusic:Bool = false){
 		sound = new Sound();
@@ -25,13 +28,28 @@ class KiSound{
 		if (asset != null){
 			load(asset, ismusic);
 		}
-		
+		Lib.current.stage.addEventListener(Event.ENTER_FRAME, enterFrame);
+	}
+	
+	public function enterFrame(event:Event){
+		var currentTime = haxe.Timer.stamp();
+		var deltaTime:Float = Std.int((currentTime - previousTime) * 1000) / 1000; //milliseconds difference
+		previousTime = currentTime;
+		update(deltaTime);
+	}
+	
+	public function update(elapsed:Float){
+		if (_channel != null){
+			soundPos = _channel.position;
+		}
 	}
 	
 	public function play(startTime:Float = 0, loop:Bool = false, loops:Int = 0){
 		if (loop){
 			loops = 0;
 		}
+		pause();
+		paused = false;
 		this.startTime = startTime;
 		looping = loop;
 		_channel = sound.play(startTime, loops);
@@ -52,6 +70,13 @@ class KiSound{
 		paused = true;
 	}
 	
+	public function getLength(){
+		if (_channel != null ){
+			return sound.length;
+		}
+		return 0;
+	}
+	
 	public function getTime(){
 		if (_channel != null){
 			return _channel.position;
@@ -70,15 +95,7 @@ class KiSound{
 			trace("sound!");
 			sound = asset;
 		}else if (Type.getClass(asset) == String){
-			#if (!html5 && !flash)
-			sound = Sound.fromFile(asset);
-			#else
-			if (ismusic){
-				sound = Assets.getMusic(asset);	
-			}else{
-				sound = Assets.getSound(asset);
-			}
-			#end
+			sound = KiAssets.getSound(asset);
 		}
 	}
 	
